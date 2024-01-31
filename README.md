@@ -177,6 +177,44 @@ WordPress::posts()->send('POST', 1, [
 
 ```
 
+### Uploading Media
+
+Media can be uploaded using the `attach` and `post` methods within a Media class.
+
+```php
+WordPress::media()->attach($name, $contents = '', $filename = null, array $headers = [])->post(int $id, array $options);
+
+// For example, uploading a media might look like...
+$imageContents = file_get_contents($imageUrl);
+$filename = basename($imageUrl);
+
+WordPress::media()
+    ->attach('file', $imageContents, $filename)
+    ->post(null, [
+            'title' => 'Media title',
+            'description' => 'Media description',
+        ]);
+
+```
+
+### With Basic Auth
+
+Requests can be made on Wordpress using basic API REST authentication plugins.
+
+```php
+$parameters = [
+    'username' => $username,
+    'password' => $password,
+];
+    
+$WordPress = new WordPress(new Client($baseUrl, $parameters));
+$response = $WordPress
+    ->media()
+    ->attach('file', $imageContents, $filename)
+    ->post(null, []);
+
+```
+
 ## Testing
 
 ```bash

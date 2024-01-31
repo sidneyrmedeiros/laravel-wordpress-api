@@ -251,4 +251,16 @@ abstract class Resource
     {
         return '/wp-json/wp/v2/'.$this->name();
     }
+
+    /**
+     * Send a POST request to the resource endpoint.
+     * 
+     * @param int $id
+     * @param array $options
+     * @return Response
+     */
+    public function post(int $id = null, array $options = []): Response
+    {
+        return $this->client->post($this->endpoint().($id ? '/'.$id : ''), $options);
+    }
 }
